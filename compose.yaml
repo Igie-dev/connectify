@@ -1,0 +1,79 @@
+version: '3.8'
+services:
+  web:
+    depends_on:
+      - server
+    build: ./front_end
+    ports:
+     - 5173:5173
+    develop:
+      watch: 
+        - path: ./front_end/package*.json
+          action: rebuild
+        - path: ./front_end
+          target: ./usr/src/app
+          action: sync
+
+  server:
+    depends_on:
+      - postgres
+    build: ./back_end
+    ports:
+      - 3000:3000
+    develop:
+      watch:
+      - path: ./back_end
+        target: ./usr/src/app
+        action: sync
+      - path: ./back_end/package*.json
+        action: rebuild
+    networks:
+       channel_connnect:
+        ipv4_address: 172.3.0.5
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    volumes:
+     - channel_connnect:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: channel_connnect
+    networks:
+       channel_connnect:
+        ipv4_address: 172.3.0.4
+
+
+  pgadmin: 
+    image: dpage/pgadmin4:latest
+    depends_on:
+      - postgres
+    ports:
+      - "5050:5050"
+
+    environment:
+      PGADMIN_LISTEN_PORT: 5050
+      PGADMIN_DEFAULT_EMAIL: jrpogiyanyow@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      SECURE_PROXY_SSL_HEADER : None
+      SESSION_COOKIE_SECURE : False
+      CSRF_COOKIE_SECURE : False
+      SERVER_MODE : False
+    networks:
+       channel_connnect:
+        ipv4_address: 172.3.0.6
+
+networks:
+  channel_connnect:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.3.0.0/16
+
+volumes:
+  channel_connnect:
+     name: channel_connnect
+     driver: local
+  

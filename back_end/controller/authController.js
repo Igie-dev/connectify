@@ -1,0 +1,127 @@
+import asyncHandler from "express-async-handler";
+import prisma from "../utils/prisma.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+const audience = process.env.CLIENT_URL;
+const issuer = process.env.SERVER_URL;
+
+const signIn = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email | !password) {
+    return res.status(400).json({ error: "Please provide all fields" });
+  }
+
+  try {
+    const foundUser = await prisma.user.findUnique({ where: { email } });
+
+    if (!foundUser?.id) {
+      return res.status(401).json({ error: "Invalid login credintials" });
+    }
+
+    const isCorrectPass = await bcrypt.compare(password, foundUser?.password);
+
+    if (!isCorrectPass) {
+      return res.status(401).json({ error: "Invalid login credintials" });
+    }
+
+    const accessToken = jwt.sign(
+      {
+        User: {
+          email: email,
+          userName: foundUser?.user_name,
+          userId: foundUser?.user_id,
+        },
+        aud: `${audience}`,
+        iss: `${issuer}`,
+      },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+
+    const refreshToken = jwt.sign(
+      {
+        userId: foundUser?.user_id,
+        aud: `${audience}`,
+        iss: `${issuer}`,
+      },
+      process.env.REFRESH_TOKEN_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    return res.status(200).json({ accessToken });
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+const refresh = asyncHandler(async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) {
+    return res.status(401).json({ error: "Unauthorized!" });
+  }
+  try {
+    const refreshToken = cookies.jwt;
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      async (error, decoded) => {
+        if (error) {
+          return res.status(403).json({ error: "Forbidden!" });
+        }
+        const userId = decoded.userId;
+        if (!userId) {
+          return res.status(401).json({ error: "Unauthorized!" });
+        }
+        const foundUser = await prisma.user.findUnique({
+          where: { user_id: userId },
+        });
+        if (!foundUser?.id) {
+          res.clearCookie("jwt", {
+            httpOnly: true,
+            sameSite: "None",
+            secure: true,
+          });
+          return res.status(401).json({ error: "Cookie cleared!" });
+        }
+
+        const accessToken = jwt.sign(
+          {
+            User: {
+              email: foundUser?.email,
+              userName: foundUser?.user_name,
+              userId: foundUser?.user_id,
+            },
+            aud: `${audience}`,
+            iss: `${issuer}`,
+          },
+          process.env.ACCESS_TOKEN_SECRET
+        );
+        return res.status(200).json({ accessToken });
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+const signOut = asyncHandler(async (req, res) => {
+  try {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) {
+      return res.sendStatus(204);
+    }
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+    return res.json({ message: "Cookie cleared!" });
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+export { signIn, refresh, signOut };
