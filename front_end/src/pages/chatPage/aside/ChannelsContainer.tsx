@@ -16,13 +16,13 @@ export default function ChannelsContainer({ handleAside }: Props) {
     }, 1000);
   };
   return (
-    <div className="flex flex-col flex-1 w-full min-h-0 gap-2 p-2 bg-secondary/50">
+    <div className="flex flex-col flex-1 w-full min-h-0 gap-2 p-2">
       <div className="flex flex-col items-start w-full gap-2 pb-2 border-b h-fit">
         <span className="ml-1 text-lg font-semibold">Channels</span>
         <Input
           type="text"
           placeholder="Search..."
-          className="h-12 bg-transparent"
+          className="bg-transparent"
           onChange={(e) => handleChange(e)}
         />
       </div>
