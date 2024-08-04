@@ -19,7 +19,7 @@ export default function ChannelCard({ channel, handleAside }: Props) {
   return (
     <li
       onClick={handleClick}
-      className={`group flex items-start w-full gap-3 p-2 py-2 rounded-sm  transition-all hover:bg-secondary/80  relative cursor-pointer h-fit ${
+      className={`group flex items-start w-full gap-3 p-3 py-4 rounded-sm  transition-all hover:bg-secondary/80  relative cursor-pointer h-fit ${
         channelId === channel?.channelId
           ? "bg-secondary/80  "
           : "bg-transparent "
