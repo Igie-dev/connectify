@@ -116,7 +116,6 @@ export default function RegisterForm() {
           </Label>
           <Input
             type="text"
-            ref={inputRef}
             id="email"
             autoComplete="false"
             placeholder="Enter your Email"
