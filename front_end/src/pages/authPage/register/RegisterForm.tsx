@@ -61,7 +61,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-[30rem] flex flex-col items-center gap-5  px-2 py-2 rounded-md  relative md:border">
+    <div className="w-full max-w-[40rem] flex flex-col items-center gap-5  px-2 py-2   relative ">
       <header className="relative flex flex-col items-center w-full gap-3 pt-5">
         <Button
           size="sm"
