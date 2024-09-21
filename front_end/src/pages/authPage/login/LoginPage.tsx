@@ -48,7 +48,7 @@ export default function LoginPage() {
     <section className="flex items-center justify-center w-screen h-screen">
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full max-w-[30rem] flex flex-col items-center gap-5  px-2 pb-5 rounded-md md:px-5 md:pb-10  border"
+        className="w-full max-w-[40rem] flex flex-col items-center gap-5  px-2 pb-5  md:px-5 md:pb-10 "
       >
         <div className="flex justify-start w-full mt-5">
           <Button
@@ -58,7 +58,7 @@ export default function LoginPage() {
             type="button"
             className=""
           >
-            Home
+            Back to home
           </Button>
         </div>
 
