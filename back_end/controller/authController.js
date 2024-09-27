@@ -35,7 +35,10 @@ const signIn = asyncHandler(async (req, res) => {
         aud: `${audience}`,
         iss: `${issuer}`,
       },
-      process.env.ACCESS_TOKEN_SECRET
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "1d",
+      }
     );
 
     const refreshToken = jwt.sign(
@@ -101,7 +104,10 @@ const refresh = asyncHandler(async (req, res) => {
             aud: `${audience}`,
             iss: `${issuer}`,
           },
-          process.env.ACCESS_TOKEN_SECRET
+          process.env.ACCESS_TOKEN_SECRET,
+          {
+            expiresIn: "1d",
+          }
         );
         return res.status(200).json({ accessToken });
       }
