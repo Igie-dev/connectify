@@ -1,5 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from "tailwindcss"
+import { fontFamily } from "tailwindcss/defaultTheme"
+
+const config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -11,12 +13,15 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: ".5rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1000px",
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.serif],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -74,4 +79,6 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+} satisfies Config
+
+export default config
