@@ -1,6 +1,8 @@
 version: '3.8'
 services:
   server:
+    image: connectify_api
+    container_name: connectify_api
     depends_on:
       - postgres
     build: ./
@@ -14,26 +16,28 @@ services:
       - path: ./package*.json
         action: rebuild
     networks:
-       channel_connnect:
+       connectify:
         ipv4_address: 172.3.0.5
 
   postgres:
     image: postgres:latest
+    container_name: connectify_api_db
     restart: always
     volumes:
-     - channel_connnect:/var/lib/postgresql/data
+     - connectify:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
         POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: channel_connnect
+        POSTGRES_DB: connectify
     networks:
-       channel_connnect:
+       connectify:
         ipv4_address: 172.3.0.4
 
 
   pgadmin: 
     image: dpage/pgadmin4:latest
+    container_name: connectify_api_pgadmin
     depends_on:
       - postgres
     ports:
@@ -48,18 +52,18 @@ services:
       CSRF_COOKIE_SECURE : False
       SERVER_MODE : False
     networks:
-       channel_connnect:
+       connectify:
         ipv4_address: 172.3.0.6
 
 networks:
-  channel_connnect:
+  connectify:
     driver: bridge
     ipam:
       config:
         - subnet: 172.3.0.0/16
 
 volumes:
-  channel_connnect:
-     name: channel_connnect
+  connectify:
+     name: connectify
      driver: local
   
