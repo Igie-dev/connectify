@@ -8,7 +8,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-[100dvh] bg-background">
       <header className="flex items-center h-20 px-4 lg:px-6">
-        <span className="ml-2 text-2xl font-bold">Channel Connect</span>
+        <span className="ml-2 text-2xl font-bold">Connectify</span>
         <nav className="flex gap-4 ml-auto sm:gap-6">
           <Button variant="link" className="text-sm ">
             Features
@@ -30,11 +30,11 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-8 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl/none">
+                <h1 className="text-3xl font-bold tracking-tighter text-white dark:text-secondary sm:text-4xl md:text-5xl lg:text-6xl/none">
                   Connect Your Channels, Amplify Your Reach
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl">
-                  Channel Connect helps you manage and grow your online presence
+                <p className="mx-auto max-w-[700px] text-gray-200 dark:text-secondary md:text-xl">
+                  Connectify helps you manage and grow your online presence
                   across multiple platforms. Streamline your content, engage
                   your audience, and boost your visibility.
                 </p>
@@ -55,7 +55,7 @@ export default function LandingPage() {
                 </h2>
                 <p className="mx-auto max-w-[600px] md:text-xl">
                   Join thousands of content creators and businesses using
-                  Channel Connect to grow their online presence.
+                  Connectify to grow their online presence.
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
@@ -83,7 +83,7 @@ export default function LandingPage() {
       </main>
       <footer className="flex flex-col items-center w-full gap-2 px-4 py-6 border-t sm:flex-row shrink-0 md:px-6">
         <p className="text-xs text-gray-500">
-          © 2023 Channel Connect. All rights reserved.
+          © 2023 Connectify. All rights reserved.
         </p>
         <nav className="flex gap-4 sm:ml-auto sm:gap-6">
           <Button variant="link" className="text-sm ">

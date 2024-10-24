@@ -1,5 +1,5 @@
 {
-	"name": "channel_connect_api",
+	"name": "connectify_api",
 	"version": "1.0.0",
 	"description": "Web app chat application api",
 	"main": "server.js",

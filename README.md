@@ -1,6 +1,6 @@
-# ChannelConnect
+# Connectify
 
-ChannelConnect is a web-based chat application built with Express.js, Socket.io, React, PostgreSQL, Prisma, and Nodemailer.
+connectify is a web-based chat application built with Express.js, Socket.io, React, PostgreSQL, Prisma, and Nodemailer.
 The application is designed to provide real-time chat functionality with a robust backend and modern frontend.
 The entire project is containerized using Docker for ease of deployment and management.
 
@@ -29,8 +29,8 @@ The entire project is containerized using Docker for ease of deployment and mana
 
 ## Installation
 
-git clone [https://github.com/yourusername/ChannelConnect.git](https://github.com/Igie-dev/ChannelConnect.git)  
-cd ChannelConnect  
+git clone [https://github.com/yourusername/connectify.git](https://github.com/Igie-dev/connectify.git)  
+cd connectify  
 npm install  
 docker compose up
 
@@ -39,7 +39,7 @@ docker compose up
 **BackEnd**  
 PORT=  
 CLIENT_URL=  
-SERVER_URL=  
+BASE_URL=  
 DATABASE_URL=  
 REFRESH_TOKEN_SECRET=  
 SYSTEM_EMAIL=  
@@ -49,6 +49,6 @@ SALTROUND=
 MESSAGES_LIMIT=
 
 **FrontEnd**  
-VITE_SERVER_URL=  
+VITE_BASE_URL=  
 VITE_SECRET_KEY=  
 VITE_MESSAGES_LIMIT=

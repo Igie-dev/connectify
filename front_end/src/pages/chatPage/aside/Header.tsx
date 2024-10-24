@@ -49,7 +49,7 @@ export default function Header() {
   return (
     <header className="relative flex flex-col items-center justify-between w-full gap-2 p-2 h-fit">
       <div className="flex items-center w-full gap-10 lg:justify-between h-fit">
-        <span className="text-lg font-semibold">ChannelConnect</span>
+        <span className="text-lg font-semibold">Connectify</span>
         <div className="flex items-center gap-2">
           <ModeToggle />
           <DropdownMenu>
