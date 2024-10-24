@@ -2,9 +2,13 @@ import asyncHandler from "express-async-handler";
 import prisma from "../utils/prisma.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 const audience = process.env.CLIENT_URL;
-const issuer = process.env.SERVER_URL;
+const issuer = process.env.BASE_URL;
+const appName = process.env.APP_NAME;
 
+//TODO fix cookie bugs
 const signIn = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -52,10 +56,10 @@ const signIn = asyncHandler(async (req, res) => {
         expiresIn: "7d",
       }
     );
-    res.cookie("jwt", refreshToken, {
+    res.cookie("c_rtoken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.status(200).json({ accessToken });
@@ -66,11 +70,12 @@ const signIn = asyncHandler(async (req, res) => {
 
 const refresh = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
-  if (!cookies?.jwt) {
+  console.log("Cookie: ", JSON.stringify(cookies));
+  if (!cookies?.c_rtoken) {
     return res.status(401).json({ error: "Unauthorized!" });
   }
   try {
-    const refreshToken = cookies.jwt;
+    const refreshToken = cookies.c_rtoken;
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
@@ -86,10 +91,10 @@ const refresh = asyncHandler(async (req, res) => {
           where: { user_id: userId },
         });
         if (!foundUser?.id) {
-          res.clearCookie("jwt", {
+          res.clearCookie("c_rtoken", {
             httpOnly: true,
-            sameSite: "None",
-            secure: true,
+            sameSite: "strict",
+            secure: process.env.NODE_ENV !== "development",
           });
           return res.status(401).json({ error: "Cookie cleared!" });
         }
@@ -123,7 +128,11 @@ const signOut = asyncHandler(async (req, res) => {
     if (!cookies?.jwt) {
       return res.sendStatus(204);
     }
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+    res.clearCookie("c_rtoken", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV !== "development",
+    });
     return res.json({ message: "Cookie cleared!" });
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });
