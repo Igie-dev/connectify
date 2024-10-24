@@ -5,7 +5,7 @@ import http from "http";
 import express from "express";
 dotenv.config();
 const audience = process.env.CLIENT_URL;
-const issuer = process.env.SERVER_URL;
+const issuer = process.env.BASE_URL;
 
 const app = express();
 const server = http.createServer(app);

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 const audience = process.env.CLIENT_URL;
-const issuer = process.env.SERVER_URL;
+const issuer = process.env.BASE_URL;
 
 const verifyJWT = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
