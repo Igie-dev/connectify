@@ -4,7 +4,7 @@ import { getToken } from "@/utils/helper";
 const URL =
   import.meta.env.NODE_ENV === "production"
     ? undefined
-    : import.meta.env.VITE_SERVER_URL;
+    : import.meta.env.VITE_BASE_URL;
 
 export const socket: Socket = io(URL, {
   auth: async (cb) => {
@@ -14,7 +14,7 @@ export const socket: Socket = io(URL, {
         cb({ token: `${token}` });
       }
       // eslint-disable-next-line no-empty
-    } catch (error) {}
+    } catch (error) { }
   },
 });
 export const asyncEmit = (emitName: string, emitData: any) => {
