@@ -25,17 +25,17 @@ app.use(cookieParser());
 
 app.use("/", express.static(path.join(__dirname, "/public")));
 
-app.use("/", root);
+app.use("/api", root);
 
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
-app.use("/register", registerRoutes);
+app.use("/api/register", registerRoutes);
 
-app.use("/users", userRoutes);
+app.use("/api/users", userRoutes);
 
-app.use("/images", imageRoutes);
+app.use("/api/images", imageRoutes);
 
-app.use("/channels", channelRoutes);
+app.use("/api/channels", channelRoutes);
 
 app.all("*", (req, res) => {
   res.status(404);
