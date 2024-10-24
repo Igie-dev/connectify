@@ -32,6 +32,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: "/auth/signout",
         method: "POST",
+        credentials: "include",
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
@@ -48,7 +49,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
     refresh: builder.mutation({
       query: () => ({
         url: "/auth/refresh",
-        method: "POST",
+        method: "GET",
+        credentials: "include",
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {

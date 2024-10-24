@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials } from "../auth/authSlice";
-const URL = import.meta.env.VITE_SERVER_URL;
+const BASE = import.meta.env.VITE_BASE_URL;
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: URL,
+  baseUrl: `${BASE}/api`,
   credentials: "include",
   prepareHeaders: (headers, { getState }: any) => {
     const token = getState().auth.token;
 
     if (token) {
+      headers.set("Content-Type", "application/json",)
       headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
@@ -25,7 +26,6 @@ const baseQueryWithAuth = async (args: any, api: any, extraOptions: any) => {
       api,
       extraOptions
     );
-
     if (refreshResult?.data) {
       api.dispatch(setCredentials({ ...refreshResult?.data }));
 
