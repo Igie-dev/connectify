@@ -61,7 +61,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-[40rem] flex flex-col items-center gap-5  px-2 py-2   relative ">
+    <div className="w-full max-w-[35em] flex flex-col items-center gap-5  px-2 py-2  md:border rounded-md relative ">
       <header className="relative flex flex-col items-center w-full gap-3 pt-5">
         <Button
           size="sm"
@@ -197,13 +197,13 @@ export default function RegisterForm() {
           <p className="text-sm">Show password</p>
         </div>
 
-        <div className="flex w-full gap-2 px-5 ">
+        <div className="flex justify-center w-full gap-2 px-5 ">
           <Button
             size="lg"
             type="submit"
             disabled={isLoading}
             variant="default"
-            className="w-full"
+            className="w-[98%]"
           >
             {isLoading ? <BtnsLoaderSpinner /> : "Submit"}
           </Button>

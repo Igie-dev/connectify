@@ -58,7 +58,7 @@ export default function VerifyOtp() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-[30rem] flex flex-col gap-5 md:border rounded-md py-10"
+      className="w-full max-w-[35rem] flex flex-col gap-5 md:border rounded-md py-10"
     >
       <header className="flex flex-col items-center w-full">
         <div className="text-lg font-semibold lg:text-3xl">

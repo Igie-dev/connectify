@@ -48,7 +48,7 @@ export default function LoginPage() {
     <section className="flex items-center justify-center w-screen h-screen">
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full max-w-[40rem] flex flex-col items-center gap-5  px-2 pb-5  md:px-5 md:pb-10 "
+        className="w-full max-w-[35rem] flex flex-col items-center gap-5  px-2 pb-5  md:px-5 md:pb-10 md:border rounded-md"
       >
         <div className="flex justify-start w-full mt-5">
           <Button
@@ -62,7 +62,7 @@ export default function LoginPage() {
           </Button>
         </div>
 
-        <h1 className="mt-5 text-2xl font-bold">Welcome to ChannelConnect</h1>
+        <h1 className="mt-5 text-2xl font-bold">Welcome to Connectify</h1>
         <h3 className="text-lg font-semibold">Log In</h3>
         <p className="my-2 text-sm text-destructive">{error?.data?.error}</p>
         <main className="flex flex-col items-start w-full gap-2">
