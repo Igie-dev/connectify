@@ -46,7 +46,9 @@ export default function MessageCard({ message, lastMessage }: Props) {
             {message?.type === EMessageTypes.TYPE_TEXT ? (
               <pre
                 className={`flex flex-wrap  max-w-[70%] mt-4 border p-2 rounded-lg  font-sans text-sm whitespace-pre-wrap w-fit break-all ${
-                  senderMe ? "bg-primary/80 text-white " : "bg-background "
+                  senderMe
+                    ? "bg-primary text-white dark:text-secondary"
+                    : "bg-background "
                 }`}
               >
                 {decryptText(message?.message)}
