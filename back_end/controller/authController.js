@@ -6,9 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const audience = process.env.CLIENT_URL;
 const issuer = process.env.BASE_URL;
-const appName = process.env.APP_NAME;
 
-//TODO fix cookie bugs
 const signIn = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -70,7 +68,7 @@ const signIn = asyncHandler(async (req, res) => {
 
 const refresh = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
-  console.log("Cookie: ", JSON.stringify(cookies));
+
   if (!cookies?.c_rtoken) {
     return res.status(401).json({ error: "Unauthorized!" });
   }
@@ -114,6 +112,12 @@ const refresh = asyncHandler(async (req, res) => {
             expiresIn: "1d",
           }
         );
+        res.cookie("c_rtoken", refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          sameSite: "strict",
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
         return res.status(200).json({ accessToken });
       }
     );
