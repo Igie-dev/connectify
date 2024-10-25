@@ -54,7 +54,7 @@ const signIn = asyncHandler(async (req, res) => {
         expiresIn: "7d",
       }
     );
-    res.cookie("c_rtoken", refreshToken, {
+    res.cookie("connectify_rtoken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
@@ -69,11 +69,11 @@ const signIn = asyncHandler(async (req, res) => {
 const refresh = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
 
-  if (!cookies?.c_rtoken) {
+  if (!cookies?.connectify_rtoken) {
     return res.status(401).json({ error: "Unauthorized!" });
   }
   try {
-    const refreshToken = cookies.c_rtoken;
+    const refreshToken = cookies.connectify_rtoken;
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
@@ -89,7 +89,7 @@ const refresh = asyncHandler(async (req, res) => {
           where: { user_id: userId },
         });
         if (!foundUser?.id) {
-          res.clearCookie("c_rtoken", {
+          res.clearCookie("connectify_rtoken", {
             httpOnly: true,
             sameSite: "strict",
             secure: process.env.NODE_ENV !== "development",
@@ -112,7 +112,7 @@ const refresh = asyncHandler(async (req, res) => {
             expiresIn: "1d",
           }
         );
-        res.cookie("c_rtoken", refreshToken, {
+        res.cookie("connectify_rtoken", refreshToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
           sameSite: "strict",
@@ -132,7 +132,7 @@ const signOut = asyncHandler(async (req, res) => {
     if (!cookies?.jwt) {
       return res.sendStatus(204);
     }
-    res.clearCookie("c_rtoken", {
+    res.clearCookie("connectify_rtoken", {
       httpOnly: true,
       sameSite: "strict",
       secure: process.env.NODE_ENV !== "development",
